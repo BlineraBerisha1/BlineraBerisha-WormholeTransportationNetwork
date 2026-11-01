@@ -38,37 +38,49 @@ def chromosome_to_paths(
         paths.append(path)
 
     return paths
-
 def paths_to_chromosome(
     paths,
-    n_ships,
-    jump_limit,
-    destination
+    n_ships: int,
+    jump_limit: int,
+    destination: int,
 ):
+    """
+    Convert the 12 paths back into the chromosome format.
+
+    The destination is NOT stored in the chromosome because
+    wormhole_udp.py appends it automatically.
+    """
+
+    if len(paths) != n_ships:
+        raise ValueError(
+            f"Expected {n_ships} paths, got {len(paths)}."
+        )
+
     chromosome = np.zeros(
         n_ships * jump_limit,
-        dtype=int
+        dtype=np.int32,
     )
 
     for ship_idx, path in enumerate(paths):
 
-        # Destination must NOT be stored
-        path_without_destination = path.copy()
+        stored_path = [int(node) for node in path]
 
+        # Remove destination before storing chromosome
         if (
-            path_without_destination
-            and path_without_destination[-1] == destination
+            stored_path
+            and stored_path[-1] == destination
         ):
-            path_without_destination = path_without_destination[:-1]
+            stored_path = stored_path[:-1]
 
-        if len(path_without_destination) > jump_limit:
+        if len(stored_path) > jump_limit:
             raise ValueError(
-                f"Ship {ship_idx + 1} exceeds jump limit."
+                f"Ship {ship_idx + 1} has too many nodes: "
+                f"{len(stored_path)} > {jump_limit}"
             )
 
         start = ship_idx * jump_limit
-        end = start + len(path_without_destination)
+        end = start + len(stored_path)
 
-        chromosome[start:end] = path_without_destination
+        chromosome[start:end] = stored_path
 
     return chromosome
