@@ -38,3 +38,37 @@ def chromosome_to_paths(
         paths.append(path)
 
     return paths
+
+def paths_to_chromosome(
+    paths,
+    n_ships,
+    jump_limit,
+    destination
+):
+    chromosome = np.zeros(
+        n_ships * jump_limit,
+        dtype=int
+    )
+
+    for ship_idx, path in enumerate(paths):
+
+        # Destination must NOT be stored
+        path_without_destination = path.copy()
+
+        if (
+            path_without_destination
+            and path_without_destination[-1] == destination
+        ):
+            path_without_destination = path_without_destination[:-1]
+
+        if len(path_without_destination) > jump_limit:
+            raise ValueError(
+                f"Ship {ship_idx + 1} exceeds jump limit."
+            )
+
+        start = ship_idx * jump_limit
+        end = start + len(path_without_destination)
+
+        chromosome[start:end] = path_without_destination
+
+    return chromosome
