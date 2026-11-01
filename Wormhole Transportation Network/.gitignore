@@ -1,0 +1,30 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# Testing/cache
+.pytest_cache/
+.coverage
+
+# Logs
+*.log
+logs/
+
+# Generated solutions/results
+results/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Large challenge database
+data/database.npz
