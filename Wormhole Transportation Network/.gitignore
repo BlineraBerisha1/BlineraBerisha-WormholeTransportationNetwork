@@ -1,6 +1,9 @@
 # Python cache
 __pycache__/
 *.py[cod]
+.venv/
+data/database.npz
+results/
 
 # Virtual environments
 .venv/
@@ -25,6 +28,3 @@ results/
 # OS files
 .DS_Store
 Thumbs.db
-
-# Large challenge database
-data/database.npz
