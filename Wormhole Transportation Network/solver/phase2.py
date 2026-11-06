@@ -1,4 +1,6 @@
-""" python -m solver.phase2 --iterations 30 --seed 42
+""" Phase 2 local search for the Wormhole Transportation Network problem.
+This is a single-ship local search that improves the solution from phase 1.
+python -m solver.phase2 --iterations 30 --seed 42
 
 Additive upgrade: existing baseline.py, local_search.py, and evaluation.py are untouched.
 """
