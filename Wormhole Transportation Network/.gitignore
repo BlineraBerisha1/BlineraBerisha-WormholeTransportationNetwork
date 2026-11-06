@@ -22,9 +22,6 @@ env/
 *.log
 logs/
 
-# Generated solutions/results
-results/
-
 # OS files
 .DS_Store
 Thumbs.db
