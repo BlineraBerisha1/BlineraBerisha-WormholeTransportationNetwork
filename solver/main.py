@@ -10,7 +10,7 @@ from pathlib import Path
 from loguru import logger
 
 from .config.settings import SolverConfig, load_config
-from .evaluation.loader import DataLoader, load_wormhole_data
+from .data.loader import DataLoader, load_wormhole_data
 from .model.network import WormholeNetwork
 from .genetic.algorithm import GeneticAlgorithm
 from .output.formatter import SolutionFormatter, create_submission_json
@@ -177,7 +177,7 @@ def main() -> int:
         network = WormholeNetwork(data_loader.get_network())
         
         # Validate data
-        from .evaluation.validator import validate_network_data
+        from .data.validator import validate_network_data
         is_valid, validation_errors = validate_network_data(
             network=network.graph,
             origins=data_loader.origins,
