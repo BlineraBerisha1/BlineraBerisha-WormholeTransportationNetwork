@@ -1,0 +1,24 @@
+{
+  "official_fitness": 309.9264269667401,
+  "origin_violations": 0,
+  "path_violations": 0,
+  "window_violation": -0.0015361905097961426,
+  "feasible": true,
+  "seed": 20261115,
+  "phase": "final_official_validation",
+  "candidates": 5917,
+  "path_lengths": [
+    333,
+    194,
+    105,
+    2,
+    2,
+    2,
+    1,
+    1,
+    1,
+    96,
+    207,
+    330
+  ]
+}

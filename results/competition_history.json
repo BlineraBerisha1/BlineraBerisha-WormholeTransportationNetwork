@@ -1,0 +1,162 @@
+[
+  {
+    "phase": "joint_variable_length",
+    "fitness": 381.5795380160125,
+    "record": true,
+    "window_violation": -0.004103124141693115,
+    "candidates": 1,
+    "elapsed_seconds": 21.87
+  },
+  {
+    "phase": "joint_variable_length",
+    "fitness": 371.42715726531605,
+    "record": true,
+    "window_violation": -0.004655122756958008,
+    "candidates": 2,
+    "elapsed_seconds": 23.83
+  },
+  {
+    "phase": "joint_variable_length",
+    "fitness": 350.30813933190075,
+    "record": true,
+    "window_violation": -0.004146456718444824,
+    "candidates": 3,
+    "elapsed_seconds": 25.55
+  },
+  {
+    "phase": "joint_variable_length",
+    "fitness": 328.8630680754068,
+    "record": true,
+    "window_violation": -0.004113256931304932,
+    "candidates": 4,
+    "elapsed_seconds": 27.29
+  },
+  {
+    "phase": "joint_variable_length",
+    "fitness": 320.8715476193902,
+    "record": true,
+    "window_violation": -0.004117369651794434,
+    "candidates": 5,
+    "elapsed_seconds": 28.92
+  },
+  {
+    "phase": "joint_variable_length",
+    "fitness": 320.6716082058847,
+    "record": true,
+    "window_violation": -0.0047577619552612305,
+    "candidates": 7,
+    "elapsed_seconds": 32.12
+  },
+  {
+    "phase": "ALNS: shifted-window restart",
+    "fitness": 318.61279455370095,
+    "record": true,
+    "window_violation": -0.004730224609375,
+    "candidates": 108,
+    "elapsed_seconds": 47.65
+  },
+  {
+    "phase": "ALNS: shifted-window restart",
+    "fitness": 313.5827771302502,
+    "record": true,
+    "window_violation": -0.004140377044677734,
+    "candidates": 142,
+    "elapsed_seconds": 50.87
+  },
+  {
+    "phase": "ALNS: whole-route bottleneck rebuild",
+    "fitness": 313.5827771302502,
+    "record": false,
+    "window_violation": -0.002848982810974121,
+    "candidates": 279,
+    "elapsed_seconds": 64.37
+  },
+  {
+    "phase": "ALNS: whole-route bottleneck rebuild",
+    "fitness": 313.5827771302502,
+    "record": false,
+    "window_violation": -0.002090752124786377,
+    "candidates": 310,
+    "elapsed_seconds": 69.5
+  },
+  {
+    "phase": "ALNS: whole-route bottleneck rebuild",
+    "fitness": 313.5827771302502,
+    "record": false,
+    "window_violation": -0.0015200972557067871,
+    "candidates": 312,
+    "elapsed_seconds": 69.69
+  },
+  {
+    "phase": "ALNS: whole-route bottleneck rebuild",
+    "fitness": 309.9264269667401,
+    "record": true,
+    "window_violation": -0.0015200972557067871,
+    "candidates": 317,
+    "elapsed_seconds": 69.93
+  },
+  {
+    "phase": "ALNS: whole-route bottleneck rebuild",
+    "fitness": 309.9264269667401,
+    "record": false,
+    "window_violation": -0.0016090869903564453,
+    "candidates": 336,
+    "elapsed_seconds": 72.69
+  },
+  {
+    "phase": "ALNS: whole-route bottleneck rebuild",
+    "fitness": 309.9264269667401,
+    "record": false,
+    "window_violation": -0.0018177628517150879,
+    "candidates": 389,
+    "elapsed_seconds": 80.43
+  },
+  {
+    "phase": "ALNS: whole-route bottleneck rebuild",
+    "fitness": 309.9264269667401,
+    "record": false,
+    "window_violation": -0.0015172362327575684,
+    "candidates": 437,
+    "elapsed_seconds": 84.75
+  },
+  {
+    "phase": "ALNS: whole-route bottleneck rebuild",
+    "fitness": 309.9264269667401,
+    "record": false,
+    "window_violation": -0.001989006996154785,
+    "candidates": 495,
+    "elapsed_seconds": 89.25
+  },
+  {
+    "phase": "ALNS: whole-route bottleneck rebuild",
+    "fitness": 309.9264269667401,
+    "record": false,
+    "window_violation": -0.001887202262878418,
+    "candidates": 627,
+    "elapsed_seconds": 98.26
+  },
+  {
+    "phase": "ALNS: whole-route bottleneck rebuild",
+    "fitness": 309.9264269667401,
+    "record": false,
+    "window_violation": -0.0017868876457214355,
+    "candidates": 770,
+    "elapsed_seconds": 111.46
+  },
+  {
+    "phase": "ALNS: whole-route bottleneck rebuild",
+    "fitness": 309.9264269667401,
+    "record": false,
+    "window_violation": -0.0015247464179992676,
+    "candidates": 1050,
+    "elapsed_seconds": 141.75
+  },
+  {
+    "phase": "ALNS: whole-route bottleneck rebuild",
+    "fitness": 309.9264269667401,
+    "record": false,
+    "window_violation": -0.0015361905097961426,
+    "candidates": 1066,
+    "elapsed_seconds": 144.9
+  }
+]
