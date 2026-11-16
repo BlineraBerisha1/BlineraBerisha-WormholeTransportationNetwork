@@ -1,0 +1,15 @@
+{
+  "population_size": 25,
+  "max_generations": 80,
+  "crossover_rate": 0.8,
+  "mutation_rate": 0.25,
+  "initialization_type": "random",
+  "heuristic_ratio": 0.0,
+  "selection_type": "tournament",
+  "tournament_size": 3,
+  "replacement_strategy": "elitism",
+  "elitism_rate": 0.1,
+  "log_interval": 10,
+  "save_interval": 40,
+  "output_dir": "./results/run_ga"
+}

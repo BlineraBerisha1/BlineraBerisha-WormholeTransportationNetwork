@@ -43,7 +43,7 @@ class FitnessEvaluator:
     - Fitness statistics
     """
     
-    def __init__(self, udp: Optional[wormhole_traversal_udp] = None, database_path: Optional[str] = None):
+    def __init__(self, udp: Optional[wormhole_traversal_udp] = None, database_path: Optional[str] = None): # type: ignore
         """
         Initialize fitness evaluator.
         
