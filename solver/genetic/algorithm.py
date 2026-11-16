@@ -10,7 +10,7 @@ import numpy as np
 from loguru import logger
 
 from ..config.settings import SolverConfig
-from ..data.loader import DataLoader
+from ..evaluation.loader import DataLoader
 from ..model.network import WormholeNetwork
 from ..evaluation.fitness import FitnessEvaluator
 from ..evaluation.constraints import ConstraintChecker
