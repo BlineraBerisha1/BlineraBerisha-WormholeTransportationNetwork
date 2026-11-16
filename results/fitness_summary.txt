@@ -1,0 +1,7 @@
+ESA SpOC2 Wormhole Transportation Network
+OFFICIALLY VERIFIED FITNESS: 309.926426966740
+Feasible: True
+Origin violations: 0
+Path violations: 0
+Window violation: -0.001536190510
+Bottleneck ship: 12

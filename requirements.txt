@@ -1,0 +1,8 @@
+# Tested with Python 3.13, NumPy 2.x, Numba, NetworkX and pytest.
+# For Kaggle use a compatible supported Python/Numba combination.
+numpy>=1.26
+numba>=0.61
+networkx>=3.0
+matplotlib>=3.6
+loguru>=0.6
+pytest>=7.0
