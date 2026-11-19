@@ -131,7 +131,6 @@ WormholeTransportationNetwork/
 │   └── fitness_summary.txt
 │
 ├── run_competitive.py
-├── run_config.json
 ├── verify.py
 ├── SpOC2_independent_audit.py
 ├── wormhole_udp.py
