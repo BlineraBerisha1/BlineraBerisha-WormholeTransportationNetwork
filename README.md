@@ -157,7 +157,7 @@ WormholeTransportationNetwork/
 
 ---
 
-## ⚙️ Installation & Usage
+##  Installation & Usage
 
 ### 1. Clone the Repository
 
@@ -213,7 +213,7 @@ The final saved solution was evaluated using the original ESA SpOC2 evaluation f
 | Metric | Result |
 |:---|---:|
 | **Best Fitness** | **309.92642697** |
-| Feasible Solution | ✅ Yes |
+| Feasible Solution |  Yes |
 | Origin Violations | 0 |
 | Path Violations | 0 |
 | Window Violation | -0.00153619 |
@@ -261,7 +261,7 @@ Using a sparse graph representation avoids the **O(V²)** memory requirement of 
 
 ---
 
-## 🔗 References
+##  References
 
 - [ESA SpOC2 Challenge](https://optimise.esa.int/challenge/spoc-2-wormhole-transportation-network/About)
 - [ESA GECCO Competition](https://www.esa.int/gsp/ACT/projects/gecco-2023-competition/)
