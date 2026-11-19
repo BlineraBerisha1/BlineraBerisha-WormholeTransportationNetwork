@@ -226,33 +226,33 @@ The saved solution and verification reports are available in the [`results/`](re
 
 Let:
 
-- `V` = Number of nodes
-- `E` = Number of edges
-- `S` = Number of spaceships
+- `n` = Number of nodes
+- `m` = Number of edges
 - `L` = Maximum route length
 - `d` = Maximum outgoing node degree
-- `I` = Number of lookahead iterations
 
 ### Time Complexity
 
 | Operation | Complexity |
 |:---|:---|
-| Graph preprocessing | O(E log E + V) |
-| Graph lookahead | O(I(V + E)) |
+| Reading the network | O(m) |
+| Sorting edges | O(m log m) |
 | Constructing one trial route | O(L × d) |
-| Candidate fitness evaluation | O(SL log E + SL log(SL)) |
+| Graph preprocessing(dense worst case) | O(n² log n)) |
 
-The overall optimization time depends on how many candidate solutions are explored and the selected search duration.
+Graph preprocessing time complexity: O(m log m)
+In the dense worst case, where m = O(n²), this becomes O(n² log n).
+The full optimization also depends on the number of candidate routes evaluated.
 
 ### Space Complexity
 
-The primary data structures require:
+The graph is stored using a Compressed Sparse Row (CSR) representation.
 
-**O(V + E + SL)**
+Space Complexity: O(n + m)
 
-Additional cached graph-lookahead tables require memory proportional to the number of cached settings multiplied by `V`.
+For a dense graph with O(n²) edges, the worst-case graph storage complexity is O(n²).
 
-Using a sparse graph representation avoids the **O(V²)** memory requirement of an adjacency matrix.
+Additional memory is used for candidate paths, cached lookahead values, and optimization data.
 
 ---
 
