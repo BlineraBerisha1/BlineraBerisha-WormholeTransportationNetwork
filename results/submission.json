@@ -6004,7 +6004,7 @@
     ],
     "problem": "wormhole-transportation-network",
     "challenge": "spoc-2-wormhole-transportation-network",
-    "name": "Valid solution fitness 309.926426967",
-    "description": "Official SpOC2 evaluator: all constraints satisfied"
+    "name": "Officially validated solution 309.92642697",
+    "description": "All official SpOC2 constraints satisfied"
   }
 ]
