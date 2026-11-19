@@ -1,184 +1,280 @@
-# Wormhole Transportation Network — ESA SpOC2
 
-**Design and Analysis of Algorithms (DAA) project** | Python, NumPy, Numba, NetworkX
+<div align="center">
 
-This project solves the **ESA SpOC2 Wormhole Transportation Network** optimization problem. The goal is to find valid routes for **12 spaceships** through a large directed network, synchronize their arrival times, and minimize the cost of the **most expensive ship**.
+# Wormhole Transportation Network
 
-## 1. The problem
+### ESA SpOC2 — Design and Analysis of Algorithms
 
-The supplied dataset contains:
+**Optimizing spaceship routes using graph algorithms and heuristic search**
 
-- **10,000 nodes** (black holes)
-- **1,998,600 directed edges** (wormholes)
-- **12 ships**, each with allowed starting nodes and a departure delay
-- **One shared destination** (node 105 in this dataset)
-- **At most 500 jumps per ship**
-- **Arrival-time window of 1.0**
+![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)
+![NumPy](https://img.shields.io/badge/NumPy-2.x-013243?logo=numpy)
+![Status](https://img.shields.io/badge/Status-Verified-success)
+![Project](https://img.shields.io/badge/Project-DAA-purple)
 
-Each edge has a **mean travel time** and a **variance**. Routes must follow real directed edges, start at an allowed origin, and end at the common destination. All ships must arrive within the allowed time window.
+**Best Fitness: `309.92642697`**
 
-The objective is to **minimize the maximum official route cost across the 12 ships**. The official evaluator also accounts for penalties when nodes are visited multiple times. Therefore, simply finding the shortest route for each ship separately is not enough.
+</div>
 
-## 2. My solution idea
+---
 
-I used a **graph-based optimization approach** that combines constructive heuristics, local search, and official constraint verification.
+## 📖 About the Project
 
-1. **Represent the network efficiently.** The competitive solver converts the graph into a compact **Compressed Sparse Row (CSR)** representation so outgoing edges can be accessed quickly.
-2. **Construct feasible routes.** It builds **variable-length paths**, choosing real directed edges and trying different starting points. A Lagrangian-style score balances low variance with the travel time needed to reach the arrival window.
-3. **Coordinate all 12 ships.** Routes are constructed for a shared arrival interval. An occupancy penalty discourages excessive reuse of the same nodes.
-4. **Improve the bottleneck.** Since the objective depends on the *worst* ship, the search focuses on expensive routes and uses **Adaptive Large Neighborhood Search (ALNS)** to replace entire routes or individual segments.
-5. **Check and save improvements.** A fast internal evaluator rejects weak candidates; promising candidates are then checked with the **original, unmodified** \`wormhole_udp.py\`. Only officially feasible improvements are kept as checkpoints.
+This project is based on the **ESA SpOC2 Wormhole Transportation Network Challenge**.
 
-The repository also contains a separate, modular **genetic algorithm** implementation with population initialization, selection, crossover, mutation, and repair operators. The final reported result is from the **competitive heuristic/ALNS solver**, not a claim that the genetic algorithm alone achieved that score.
+The task is to find efficient routes for 12 spaceships traveling through a large network of black holes connected by wormholes.
 
-## 3. Project structure
+Each spaceship must reach the same destination while respecting path and arrival-time constraints.
 
-\`\`\`text
+The main objective is to **minimize the maximum travel cost among all 12 spaceships**.
+
+This is not a simple shortest-path problem because the routes must also satisfy timing requirements and account for penalties caused by repeated node visits.
+
+## 🌌 The Network
+
+| Property | Value |
+|:---|---:|
+| Black holes (nodes) | 10,000 |
+| Wormholes (directed edges) | 1,998,600 |
+| Spaceships | 12 |
+| Common destination | Node 105 |
+| Maximum jumps per ship | 500 |
+| Arrival window | 1.0 |
+| Solution vector | 6,000 integers |
+
+Each wormhole contains two important values:
+
+- **Mean:** Expected travel time.
+- **Variance:** Travel uncertainty contributing to the route cost.
+
+A valid solution must respect allowed starting nodes, existing directed connections, the jump limit, and the shared arrival window.
+
+---
+
+## My Approach
+
+I approached the problem using **graph-based heuristics and iterative optimization**.
+
+Rather than searching through every possible combination of routes, I used efficient data structures and improvement strategies to explore promising solutions.
+
+### 1. Graph Representation
+
+The wormhole network is represented as a directed weighted graph.
+
+The competitive solver uses a **Compressed Sparse Row (CSR)** representation, allowing efficient access to outgoing edges without storing a large adjacency matrix.
+
+### 2. Route Construction
+
+Initial candidate routes are constructed using a heuristic that considers:
+
+- Wormhole variance
+- Expected travel time
+- Allowed starting nodes
+- Arrival-time constraints
+- Repeated node usage
+
+A Lagrangian-inspired scoring function balances travel time and route cost.
+
+### 3. Coordinating the Spaceships
+
+The routes cannot be optimized independently.
+
+All 12 ships must arrive within the same allowed time window, so the solver constructs and adjusts paths while considering the arrival times of the other ships.
+
+### 4. Improving the Worst Route
+
+The optimization objective depends on the spaceship with the highest cost.
+
+I therefore focused on improving the **bottleneck ship** using:
+
+- Local search
+- Segment replacement
+- Variable-length route reconstruction
+- Adaptive Large Neighborhood Search (ALNS)
+
+These strategies explore alternative paths while attempting to preserve feasibility.
+
+### 5. Verification and Saving
+
+Candidate solutions are first evaluated using a faster internal evaluator.
+
+Promising improvements are then checked against the original ESA evaluation function.
+
+Only officially feasible improvements are saved, allowing optimization to continue from the best existing solution.
+
+---
+
+##  Project Structure
+
+```text
 WormholeTransportationNetwork/
+│
 ├── data/
-│   ├── database.npz            # Original network and mission data
-│   └── example.npy             # Supplied example chromosome
+│   ├── database.npz
+│   └── example.npy
+│
 ├── solver/
-│   ├── competitive.py          # Main competitive route-construction + ALNS search
-│   ├── optimize.py             # Local route rewiring and improvement
-│   ├── main.py                 # Alternative genetic algorithm entry point
-│   ├── config/                 # GA configuration
-│   ├── data/                   # Data loading and validation
-│   ├── model/                  # Graph, paths and chromosome representation
-│   ├── evaluation/             # Fitness and constraint checks
-│   ├── genetic/                # Selection, crossover, mutation and GA loop
-│   ├── heuristics/             # Initialization and pathfinding
-│   ├── repair/                 # Origin, path and time-window repair
-│   ├── output/                 # Result and submission formatting
-│   └── tests/                  # Automated tests
-├── results/                    # Saved best solution, metrics and submission
-├── run_competitive.py          # Recommended solver entry point
-├── run_config.json             # Genetic algorithm settings
-├── verify.py                   # Verification using the official evaluator
-├── SpOC2_independent_audit.py  # Separate data, route and cost audit
-├── wormhole_udp.py             # Original ESA challenge evaluator
-└── requirements.txt
-\`\`\`
+│   ├── competitive.py
+│   ├── optimize.py
+│   ├── path.py
+│   │
+│   ├── 
+│   ├── data/
+│   ├── model/
+│   ├── evaluation/
+│   ├── heuristics/
+│   ├── search
+│   ├── output/
+│   └── tests/
+│
+├── results/
+│   ├── best_solution.npy
+│   ├── best_metrics.json
+│   ├── submission.json
+│   ├── decision_vector.json
+│   ├── verification_report.json
+│   ├── competition_history.json
+│   └── fitness_summary.txt
+│
+├── run_competitive.py
+├── run_config.json
+├── verify.py
+├── SpOC2_independent_audit.py
+├── wormhole_udp.py
+├── requirements.txt
+└── README.md
+```
 
-A solution is stored as a **6,000-integer chromosome**: 12 rows × 500 positions. Each row lists the source nodes of a ship's path; zero values pad unused positions, and the common destination is implicit.
+### Important Files
 
-## 4. Installation
+| File | Purpose |
+|:---|:---|
+| `run_competitive.py` | Runs the main competitive solver |
+| `solver/competitive.py` | Route construction and ALNS optimization |
+| `solver/optimize.py` | Local route improvement |
+| `verify.py` | Checks a solution using the original evaluator |
+| `SpOC2_independent_audit.py` | Independently audits the final solution |
+| `results/` | Stores solutions, metrics and submission files |
 
-Requires Python and the dependencies in \`requirements.txt\` (the repository notes testing with Python 3.13).
+---
 
-\`\`\`bash
+## ⚙️ Installation & Usage
+
+### 1. Clone the Repository
+
+```powershell
 git clone https://github.com/BlineraBerisha1/BlineraBerisha-WormholeTransportationNetwork.git
 cd BlineraBerisha-WormholeTransportationNetwork
+```
 
-python -m venv .venv
+### 2. Install Dependencies
+
+```powershell
 python -m pip install -r requirements.txt
-\`\`\`
+```
 
-Optionally activate the virtual environment **before** installing dependencies:
+The project uses Python with NumPy, Numba, NetworkX, Matplotlib, Loguru and pytest.
 
-- Windows PowerShell: \`.\.venv\Scripts\Activate.ps1\`
-- macOS/Linux: \`source .venv/bin/activate\`
+### 3. Verify the Existing Solution
 
-## 5. How to run
-
-Run these commands from the repository root.
-
-**Verify the included best solution:**
-
-\`\`\`bash
+```powershell
 python verify.py
-\`\`\`
+```
 
-**Run the independent audit:**
+### 4. Run the Optimization
 
-\`\`\`bash
-python SpOC2_independent_audit.py
-\`\`\`
-
-**Run automated tests:**
-
-\`\`\`bash
-python -m pytest solver/tests -q
-\`\`\`
-
-**Continue optimizing the saved solution (recommended solver):**
-
-\`\`\`bash
+```powershell
 python run_competitive.py --minutes 10
-\`\`\`
+```
 
-The competitive solver loads the best feasible saved checkpoint, explores new routes and segments, verifies improvements with the official evaluator, and updates the output files. It can be rerun to continue searching. A new run is **not guaranteed** to improve the score.
+The solver starts from an existing feasible checkpoint and attempts to improve it.
 
-To check and re-export the current checkpoint without scheduling extra search time:
+The search duration can be changed using the `--minutes` argument.
 
-\`\`\`bash
-python -m solver.competitive --minutes 0
-\`\`\`
+### 5. Run the Tests
 
-Other available entry points:
+```powershell
+python -m pytest solver/tests -q
+```
 
-\`\`\`bash
-# Local two-edge / route-rewiring optimization
-python -m solver.optimize --resume results/best_solution.npy --minutes 3
+### 6. Independent Audit
 
-# Separate genetic algorithm implementation
-python -m solver.main --config run_config.json
-\`\`\`
+```powershell
+python SpOC2_independent_audit.py
+```
 
-## 6. Final verified result
+The audit checks the challenge files, graph connections, routes and costs independently.
 
-The **saved solution** in this repository has the following reported results from the original evaluator:
+---
+
+##  Final Results
+
+The final saved solution was evaluated using the original ESA SpOC2 evaluation function.
 
 | Metric | Result |
-| --- | ---: |
-| **Official fitness (lower is better)** | **309.9264269667** |
-| Feasible | **Yes** |
-| Origin violations | 0 |
-| Invalid-path violations | 0 |
-| Arrival-window violation | -0.0015361905 |
-| Bottleneck ship | 12 |
-| Ships reaching the destination | 12 / 12 |
+|:---|---:|
+| **Best Fitness** | **309.92642697** |
+| Feasible Solution | ✅ Yes |
+| Origin Violations | 0 |
+| Path Violations | 0 |
+| Window Violation | -0.00153619 |
+| Bottleneck Ship | 12 |
 
-A negative arrival-window violation means the solution satisfies the timing constraint with a small margin.
+**A lower fitness value represents a better solution.**
 
-Important result files:
+The negative window violation confirms that the arrival-time constraint is satisfied.
 
-- \`results/best_solution.npy\` — saved solution chromosome
-- \`results/submission.json\` — submission-format output
-- \`results/decision_vector.json\` — solution as JSON integers
-- \`results/best_metrics.json\` — official fitness and feasibility metrics
-- \`results/verification_report.json\` — per-ship costs, times and path lengths
-- \`results/competition_history.json\` — recorded improvements
-- \`results/fitness_summary.txt\` — readable final result
+The saved solution and verification reports are available in the [`results/`](results/) directory.
 
-The independent audit also checks the supplied challenge files' SHA-256 hashes, origin validity, directed edges, destinations, and reconstructed costs.
+---
 
-## 7. Time and space complexity
+##  Time & Space Complexity
 
 Let:
 
-- **V** = number of nodes (10,000)
-- **E** = number of edges (1,998,600)
-- **S** = number of ships (12)
-- **L** = maximum route length (500)
-- **d** = maximum outgoing degree of a node
-- **I** = number of graph-lookahead iterations
-- **K** = number of distinct cached lookahead settings
+- `V` = Number of nodes
+- `E` = Number of edges
+- `S` = Number of spaceships
+- `L` = Maximum route length
+- `d` = Maximum outgoing node degree
+- `I` = Number of lookahead iterations
 
-| Operation | Approximate time complexity |
-| --- | --- |
-| Build sorted graph / CSR representation | **O(E log E + V)** |
-| Compute one lookahead table | **O(I(V + E))** |
-| Construct one trial route | **O(L × d)** (worst-case bound) |
-| Score a complete candidate with the fast evaluator | **O(SL log E + SL log(SL))** |
-| Complete optimization | Depends on the number of trials and the chosen time budget |
+### Time Complexity
 
-**Space complexity:** The graph and route data need **O(V + E + SL)** memory. Cached graph-lookahead tables add **O(KV)**, giving **O(V + E + SL + KV)** overall for the principal stored structures (excluding library overhead and temporary evaluation objects).
+| Operation | Complexity |
+|:---|:---|
+| Graph preprocessing | O(E log E + V) |
+| Graph lookahead | O(I(V + E)) |
+| Constructing one trial route | O(L × d) |
+| Candidate fitness evaluation | O(SL log E + SL log(SL)) |
 
-The full search does not have a single fixed runtime: it explores multiple candidate routes until its configured time budget expires. These estimates describe the main data structures and operations, rather than a guarantee about end-to-end runtime.
+The overall optimization time depends on how many candidate solutions are explored and the selected search duration.
 
-## 8. Summary
+### Space Complexity
 
-The main lesson from this project is that a shortest-path algorithm alone cannot solve a **multi-ship, time-constrained, min-max optimization** problem. The practical solution was to combine efficient graph representation, route construction, coordinated arrival times, bottleneck-focused local search, and repeated checking against the official evaluator.
+The primary data structures require:
 
-**Reference:** [ESA SpOC2 challenge description](https://optimise.esa.int/challenge/spoc-2-wormhole-transportation-network/About)
+**O(V + E + SL)**
+
+Additional cached graph-lookahead tables require memory proportional to the number of cached settings multiplied by `V`.
+
+Using a sparse graph representation avoids the **O(V²)** memory requirement of an adjacency matrix.
+
+---
+
+## 🔗 References
+
+- [ESA SpOC2 Challenge](https://optimise.esa.int/challenge/spoc-2-wormhole-transportation-network/About)
+- [ESA GECCO Competition](https://www.esa.int/gsp/ACT/projects/gecco-2023-competition/)
+
+---
+
+<div align="center">
+
+**Design and Analysis of Algorithms Project**
+
+Made with Python 
+
+Blinera Berisha
+
+</div>
