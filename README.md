@@ -18,7 +18,7 @@
 
 ---
 
-## 📖 About the Project
+## About the Project
 
 This project is based on the **ESA SpOC2 Wormhole Transportation Network Challenge**.
 
@@ -30,7 +30,7 @@ The main objective is to **minimize the maximum travel cost among all 12 spacesh
 
 This is not a simple shortest-path problem because the routes must also satisfy timing requirements and account for penalties caused by repeated node visits.
 
-## 🌌 The Network
+##  The Network
 
 | Property | Value |
 |:---|---:|
@@ -118,7 +118,6 @@ WormholeTransportationNetwork/
 │   ├── optimize.py
 │   ├── path.py
 │   │
-│   ├── 
 │   ├── data/
 │   ├── model/
 │   ├── evaluation/
