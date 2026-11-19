@@ -7,11 +7,6 @@
 
 **Optimizing spaceship routes using graph algorithms and heuristic search**
 
-![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)
-![NumPy](https://img.shields.io/badge/NumPy-2.x-013243?logo=numpy)
-![Status](https://img.shields.io/badge/Status-Verified-success)
-![Project](https://img.shields.io/badge/Project-DAA-purple)
-
 **Best Fitness: `309.92642697`**
 
 </div>
