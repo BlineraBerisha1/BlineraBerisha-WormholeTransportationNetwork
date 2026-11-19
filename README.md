@@ -117,7 +117,7 @@ WormholeTransportationNetwork/
 │   ├── model/
 │   ├── evaluation/
 │   ├── heuristics/
-│   ├── search
+│   ├── search/
 │   ├── output/
 │   └── tests/
 │
